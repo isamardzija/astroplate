@@ -1,13 +1,15 @@
 import { humanize } from "@/lib/utils/textConverter";
 import React from "react";
 
-function Notice({
-  type,
-  children,
-}: {
-  type: string;
+type NoticeProps = {
+  type: "info" | "tip" | "warning" | "note";
+  title?: string;
   children: React.ReactNode;
-}) {
+};
+
+function Notice({ type, title, children }: NoticeProps) {
+  const displayTitle =
+    title ?? (type === "note" ? "Najbitnije informacije" : humanize(type));
   return (
     <div className={`notice ${type}`}>
       <div className="notice-head">
@@ -75,7 +77,7 @@ function Notice({
             />
           </svg>
         )}
-        <p className="my-0 ml-1.5">{humanize(type)}</p>
+        <p className="my-0 ml-1.5">{displayTitle}</p>
       </div>
       <div className="notice-body">{children}</div>
     </div>

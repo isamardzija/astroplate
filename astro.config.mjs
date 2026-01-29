@@ -28,6 +28,7 @@ export default defineConfig({
         "@/shortcodes/Youtube",
         "@/shortcodes/Tabs",
         "@/shortcodes/Tab",
+        "@/shortcodes/magnets/SolarPanelCalculator",
       ],
     }),
     mdx(),

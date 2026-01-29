@@ -1,57 +1,33 @@
 {
   "main": [
     {
-      "name": "Home",
+      "name": "Početna",
       "url": "/"
     },
     {
-      "name": "About",
-      "url": "/about"
+      "name": "O nama",
+      "url": "/o-nama"
     },
     {
-      "name": "Elements",
-      "url": "/elements"
-    },
-    {
-      "name": "Pages",
+      "name": "Osiguranja",
       "url": "",
       "hasChildren": true,
       "children": [
         {
-          "name": "Contact",
-          "url": "/contact"
-        },
-        {
-          "name": "Blog",
-          "url": "/blog"
-        },
-        {
-          "name": "Authors",
-          "url": "/authors"
-        },
-        {
-          "name": "Categories",
-          "url": "/categories"
-        },
-        {
-          "name": "Tags",
-          "url": "/tags"
-        },
-        {
-          "name": "404 Page",
-          "url": "/404"
+          "name": "Solarni paneli",
+          "url": "/osiguranje-solarnih-panela"
         }
       ]
     }
   ],
   "footer": [
     {
-      "name": "Elements",
-      "url": "/elements"
+      "name": "Kolačići",
+      "url": "/cookies"
     },
     {
-      "name": "Privacy Policy",
-      "url": "/privacy-policy"
+      "name": "Politika privatnosti",
+      "url": "/politika-privatnosti"
     }
   ]
 }
