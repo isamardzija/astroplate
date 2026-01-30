@@ -31,8 +31,6 @@ export default function SolarInsuranceLeadForm() {
     const num = parseFloat(value);
     if (!value) return "Obavezno polje";
     if (isNaN(num) || num <= 0) return "Mora biti pozitivan broj";
-    if (num < 40) return "Minimalna vrijednost je 40";
-    if (num > 500) return "Maksimalna vrijednost je 500";
     return undefined;
   };
 
@@ -78,7 +76,7 @@ export default function SolarInsuranceLeadForm() {
   };
 
   // Handle step 1 submission
-  const handleShowEstimate = (e: React.FormEvent) => {
+  const handleShowEstimate = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const footageError = validateSquareFootage(formData.squareFootage);
@@ -103,7 +101,7 @@ export default function SolarInsuranceLeadForm() {
   };
 
   // Handle final form submission
-  const handleFinalSubmit = (e: React.FormEvent) => {
+  const handleFinalSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const emailError = validateEmail(formData.email);
@@ -113,8 +111,21 @@ export default function SolarInsuranceLeadForm() {
       return;
     }
 
-    // Form will be submitted by Netlify
-    // Data is already in the form fields
+    // Submit the form to Netlify
+    const form = e.currentTarget;
+    fetch("/", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams(new FormData(form) as any).toString(),
+    })
+      .then(() => {
+        alert("Hvala! Primili smo vaš zahtjev i javit ćemo vam se uskoro.");
+        // Reset form or redirect as needed
+      })
+      .catch((error) => {
+        alert("Došlo je do greške. Molimo pokušajte ponovno.");
+        console.error(error);
+      });
   };
 
   const formatCurrency = (amount: number) => {
@@ -140,16 +151,12 @@ export default function SolarInsuranceLeadForm() {
       </div>
 
       {/* Heading */}
-      {step == 1 && (
-        <>
-          <h2 className="text-3xl font-bold text-gray-900 mb-2 text-center">
-            Izračunajte cijenu osiguranja
-          </h2>
-          <p className="text-gray-600 text-center mb-8">
-            Unesite osnovne podatke o kući i solarnoj elektrani
-          </p>
-        </>
-      )}
+      <h2 className="text-3xl font-bold text-gray-900 mb-2 text-center">
+        Izračunajte procjenu osiguranja za vašu nekretninu sa solarnim panelima
+      </h2>
+      <p className="text-gray-600 text-center mb-8">
+        Unesite osnovne podatke i odmah saznajte okvirnu cijenu
+      </p>
 
       {/* Step 1: Property Details */}
       {step === 1 && (
@@ -238,12 +245,12 @@ export default function SolarInsuranceLeadForm() {
 
           <div className="text-center bg-gradient-to-br from-blue-50 to-indigo-50 p-6 rounded-xl border border-blue-200">
             <h3 className="text-xl font-semibold text-gray-900 mb-2">
-              Okvirna godišnja cijena
+              Vaša procjena osiguranja
             </h3>
             <p className="text-3xl font-bold text-blue-600 mb-2">
               {formatCurrency(estimate.low)} - {formatCurrency(estimate.high)}
             </p>
-            <p className="text-sm text-gray-600">Ovisno o odabranim rizicima</p>
+            <p className="text-sm text-gray-600">Okvirna godišnja premija</p>
           </div>
         </div>
       )}
@@ -253,14 +260,11 @@ export default function SolarInsuranceLeadForm() {
         <div className="animate-fadeIn">
           <div className="mb-6">
             <h3 className="text-xl font-semibold text-gray-900 mb-3 text-center">
-              Želite točan izračun?
+              Želite detaljnu kalkulaciju police?
             </h3>
-            <p className="text-center">
-              Unesite Vašu e-mail adresu kako biste dobili besplatnu ponudu.
-            </p>
 
             {/* Benefits List */}
-            <div className="bg-gray-50 p-4 rounded-lg mb-6 space-y-2 flex flex-col items-center">
+            <div className="bg-gray-50 p-4 rounded-lg mb-6 space-y-2">
               <div className="flex items-start gap-2">
                 <svg
                   className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0"
@@ -276,7 +280,7 @@ export default function SolarInsuranceLeadForm() {
                   />
                 </svg>
                 <span className="text-sm text-gray-700">
-                  Zaštita od realnih rizika
+                  Personalizirana pokrivenost
                 </span>
               </div>
               <div className="flex items-start gap-2">
@@ -330,16 +334,24 @@ export default function SolarInsuranceLeadForm() {
             />
             <input
               type="hidden"
-              name="squareFootage"
+              name="solar-squareFootage"
               value={formData.squareFootage}
             />
             <input
               type="hidden"
-              name="solarValue"
+              name="solar-solarValue"
               value={formData.solarValue}
             />
-            <input type="hidden" name="estimateLow" value={estimate?.low} />
-            <input type="hidden" name="estimateHigh" value={estimate?.high} />
+            <input
+              type="hidden"
+              name="solar-estimateLow"
+              value={estimate?.low}
+            />
+            <input
+              type="hidden"
+              name="solar-estimateHigh"
+              value={estimate?.high}
+            />
 
             <div className="mb-6">
               <label
@@ -351,7 +363,7 @@ export default function SolarInsuranceLeadForm() {
               <input
                 type="email"
                 id="email"
-                name="email"
+                name="solar-email"
                 value={formData.email}
                 onChange={(e) => handleInputChange("email", e.target.value)}
                 placeholder="ime@primjer.hr"
