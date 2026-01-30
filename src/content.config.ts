@@ -74,6 +74,15 @@ const contactCollection = defineCollection({
 const homepageCollection = defineCollection({
   loader: glob({ pattern: "**/-*.{md,mdx}", base: "src/content/homepage" }),
   schema: z.object({
+    // Add SEO fields first
+    meta_title: z.string().optional(),
+    title: z.string().optional(),
+    description: z.string().optional(),
+    image: z.string().optional(),
+    noindex: z.boolean().optional(),
+    canonical: z.string().optional(),
+
+    // Your existing fields
     banner: z.object({
       title: z.string(),
       content: z.string(),

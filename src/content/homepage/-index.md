@@ -1,4 +1,6 @@
 ---
+meta_title: Online vodič kroz osiguranje u Hrvatskoj | osigurano.hr
+description: "Detaljni vodiči i besplatni kalkulatori za životno osiguranje, osiguranje imovine i dopunsko zdravstveno osiguranje u Hrvatskoj. Usporedite cijene i pronađite najbolju policu."
 # Banner
 banner:
   title: "Osiguranje za svakodnevnog čovjeka"

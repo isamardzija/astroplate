@@ -47,7 +47,7 @@ const { title, meta_title, description, image, noindex, canonical } =
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="hr">
   <head>
     <!-- google tag manager -->
     {
@@ -118,7 +118,7 @@ const { title, meta_title, description, image, noindex, canonical } =
     <meta
       name="description"
       content={plainify(
-        description ? description : config.metadata.meta_description
+        description ? description : config.metadata.meta_description,
       )}
     />
 
@@ -131,7 +131,7 @@ const { title, meta_title, description, image, noindex, canonical } =
     <meta
       property="og:title"
       content={plainify(
-        meta_title ? meta_title : title ? title : config.site.title
+        meta_title ? meta_title : title ? title : config.site.title,
       )}
     />
 
@@ -139,7 +139,7 @@ const { title, meta_title, description, image, noindex, canonical } =
     <meta
       property="og:description"
       content={plainify(
-        description ? description : config.metadata.meta_description
+        description ? description : config.metadata.meta_description,
       )}
     />
     <meta property="og:type" content="website" />
@@ -152,7 +152,7 @@ const { title, meta_title, description, image, noindex, canonical } =
     <meta
       name="twitter:title"
       content={plainify(
-        meta_title ? meta_title : title ? title : config.site.title
+        meta_title ? meta_title : title ? title : config.site.title,
       )}
     />
 
@@ -160,7 +160,7 @@ const { title, meta_title, description, image, noindex, canonical } =
     <meta
       name="twitter:description"
       content={plainify(
-        description ? description : config.metadata.meta_description
+        description ? description : config.metadata.meta_description,
       )}
     />
 

@@ -5,11 +5,10 @@ import { getListPage } from "@/lib/contentParser.astro";
 import { markdownify } from "@/lib/utils/textConverter";
 import { FaArrowAltCircleRight } from "react-icons/fa";
 const homepage = await getListPage("homepage", "-index");
-
-const { banner, features } = homepage.data;
+const { meta_title, description, banner, features } = homepage.data;
 ---
 
-<Base>
+<Base meta_title={meta_title} description={description}>
   <!-- Banner -->
   <section class="pt-14">
     <div class="container">
