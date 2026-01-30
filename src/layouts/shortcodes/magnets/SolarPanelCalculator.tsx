@@ -166,8 +166,7 @@ export default function SolarInsuranceLeadForm() {
       {step === 1 && (
         <>
           <h2 className="text-3xl font-bold text-gray-900 mb-2 text-center">
-            Izračunajte procjenu osiguranja za vašu nekretninu sa solarnim
-            panelima
+            Izračunajte cijenu osiguranja kuće sa solarnim panelima
           </h2>
           <p className="text-gray-600 text-center mb-6">
             Unesite osnovne podatke i odmah saznajte okvirnu cijenu
@@ -195,7 +194,7 @@ export default function SolarInsuranceLeadForm() {
               htmlFor="squareFootage"
               className="block text-sm font-medium text-gray-700 mb-2"
             >
-              Kvadratura nekretnine (m²)
+              Stambena kvadratura nekretnine (m²)
             </label>
             <input
               type="number"
@@ -222,7 +221,7 @@ export default function SolarInsuranceLeadForm() {
               htmlFor="solarValue"
               className="block text-sm font-medium text-gray-700 mb-2"
             >
-              Vrijednost solarne instalacije (€)
+              Vrijednost solarne instalacije (EUR)
             </label>
             <input
               type="number"

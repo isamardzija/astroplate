@@ -8,8 +8,9 @@
       "name": "O nama",
       "url": "/o-nama"
     },
+    { "name": "Blog", "url": "/blog" },
     {
-      "name": "Osiguranja",
+      "name": "Vrste osiguranja",
       "url": "",
       "hasChildren": true,
       "children": [

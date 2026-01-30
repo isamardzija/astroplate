@@ -1,11 +1,22 @@
 ---
 title: "Osiguranje solarnih panela – kako zaštiti svoju investiciju?"
 meta_title: "Osiguranje solarnih panela | Osiguranje kuće s panelima"
-description: "Saznajte što pokriva osiguranje solarnih panela, koje su najčešće štete i kako zaštititi svoju investiciju u obnovljivu energiju."
+description: "Instalirali ste solarne panele? Saznajte kako ih pravilno osigurati, što pokriva polica i koliko košta (kalkulator za brzi izračun)."
 draft: false
 ---
 
-Solarni paneli postaju sve popularniji u Hrvatskoj, kako među vlasnicima kuća, tako i u poslovnim objektima. Uz rast cijena energije i poticaje za obnovljive izvore, ulaganje u sunčevu energiju predstavlja vrijednu i dugoročnu investiciju. No, poput svake imovine, i solarni paneli mogu biti izloženi rizicima – od vremenskih nepogoda do tehničkih kvarova. Zato osiguranje solarnih panela postaje nužnost za sigurnost i mir vlasnika.
+import { Image } from "astro:assets";
+import heroImg from "./solarni-paneli-na-obiteljskoj-kuci.webp";
+
+<form name="solar-insurance-leads" netlify netlify-honeypot="bot-field" hidden>
+  <input type="text" name="solar-squareFootage" />
+  <input type="text" name="solar-solarValue" />
+  <input type="email" name="solar-email" />
+  <input type="text" name="solar-estimateLow" />
+  <input type="text" name="solar-estimateHigh" />
+</form>
+
+Osiguranje solarnih panela postaje sve češća potreba građana koji su se odlučili za instalaciju elektrane u svojim domovima. Instalacija može koštati i nekoliko desetaka tisuća eura, zbog čega je bitno zaštiti su od potencijalnih opasnosti. Srećom, moguće ih je osigurati po vrlo pristupačnoj cijeni.
 
 <Notice type="note">
   <ul>
@@ -13,16 +24,26 @@ Solarni paneli postaju sve popularniji u Hrvatskoj, kako među vlasnicima kuća,
       Solarni paneli se osiguravaju u sklopu osiguranja građevinskog dijela kuće
       (krov, zidovi)
     </li>
+    <li>
+      Osiguravaju se od najčešćih rizika (oluja, tuča požar), ali mogu se i
+      dodatno osigurati za slučaj udara groma (prenapon), kvara i sl.
+    </li>
+      <li>
+    U nastavku unesite podatke kako biste dobili okvirnu cijenu osiguranja
+  </li>
   </ul>
+
 </Notice>
+
+<Image src={heroImg} alt="Solarni paneli na krovu obiteljske kuće." />
 
 ## Što je osiguranje solarnih panela?
 
-Osiguranje solarnih panela je posebna polica koja štiti vašu investiciju od neželjenih događaja koji mogu uzrokovati štetu ili gubitak. Za razliku od standardnog osiguranja kuće, koje često pokriva samo krov ili imovinu u kući, osiguranje panela posebno pokriva uređaje koji proizvode električnu energiju.
-
-Paneli nisu uvijek automatski uključeni u postojeće police – zato je važno provjeriti svoju policu i po potrebi ugovoriti dodatno pokriće.
+Nakon što su solarni paneli ugrađeni na kuću, osiguravaju se u sklopu građevinskog dijela nekretnine (zajedno sa krovom). Rijetko je moguće da će neki rizik oštetiti **samo** panele, bez da primjerice ošteti i krovište. Ugovaranjem police štiti se kompletna kuća zajedno sa solarnim panelima od odabranih rizika.
 
 ## Koje rizike pokriva osiguranje solarnih panela?
+
+Građevinski dio kuće osigurava se od brojnih rizika, ovisno o potrebama. Bitno je dobro razmotriti lokaciju nekretnine i realne opasnosti koje se tamo mogu dogoditi.
 
 ### Vremenske nepogode
 
@@ -35,6 +56,11 @@ Solarni paneli i prateća oprema mogu pretrpjeti kvarove poput kratkog spoja, pr
 ### Krađa i vandalizam
 
 Paneli su vrijedna oprema, pa su izloženi riziku krađe ili namjernog oštećenja. Osiguranje može pokriti troškove zamjene ili popravka ukradenih i oštećenih panela.
+
+<Notice type="tip">
+  Važno je prije potpisivanja police provjeriti točne uvjete pokrića i iznose
+  osiguranih svota.
+</Notice>
 
 ## Kome je namijenjeno osiguranje solarnih panela?
 
@@ -56,7 +82,9 @@ Cijena osiguranja ovisi o nekoliko faktora:
 
 - **Vrsta objekta i montaže** – pristup i sigurnosne mjere utječu na cijenu
 
-U pravilu, trošak police je manji u odnosu na potencijalnu štetu, čineći osiguranje isplativom investicijom.
+U pravilu, trošak police je manji u odnosu na potencijalnu štetu, čineći osiguranje isplativom investicijom. Okvirnu cijenu možete saznati koristeći besplatni kalkulator.
+
+<SolarPanelCalculator client:load />
 
 ## Kako odabrati najbolje osiguranje solarnih panela?
 
@@ -89,16 +117,28 @@ Na što obratiti pažnju u polici:
   Polica obično pokriva popravak ili zamjenu panela, ovisno o uvjetima
   osiguravajuće kuće.
 </Accordion>
+<Accordion
+  client:load
+  title="Mogu li osigurati samo solarne panele bez police kuće?"
+>
+  U Hrvatskoj se obično ne nudi zasebno osiguranje solarnih panela bez osnovne
+  police osiguranja kuće. Rijetke su štete koje mogu oštetiti panele bez da
+  oštete i ostatak kuće, koji je često i skuplji nego sami paneli. Iznimka tome
+  su proizvođači samih panela koji mogu ponuditi police. Takve police često
+  imaju obvezno učešće u šteti (dio štete plaćate sami).
+</Accordion>
+<Accordion
+  client:load
+  title="Utječe li ugradnja solarnih panela na cijenu osiguranja kuće?"
+>
+  Da, veća vrijednost imovine često znači i malo veću premiju. No pravilno
+  osiguranje štiti vas od većih financijskih gubitaka ako dođe do štete.
+</Accordion>
 
 ## Zaključak – Isplati li se osigurati solarne panele?
 
 Ulaganje u solarne panele štedi novac i energiju dugoročno, ali dolazi i s rizicima. Osiguranje solarnih panela pruža mir i financijsku zaštitu, čuvajući vašu investiciju od vremenskih nepogoda, kvarova ili krađe. U konačnici, premija za policu je mala u usporedbi s potencijalnim troškovima popravka ili zamjene, pa se osiguranje pokazuje kao pametan i odgovoran izbor za svakog vlasnika solarnih panela.
 
-<form name="solar-insurance-leads" netlify netlify-honeypot="bot-field" hidden>
-  <input type="text" name="solar-squareFootage" />
-  <input type="text" name="solar-solarValue" />
-  <input type="email" name="solar-email" />
-  <input type="text" name="solar-estimateLow" />
-  <input type="text" name="solar-estimateHigh" />
-</form>
+Ispravna polica osiguranja kuće s dodatkom za solarne panele daje vam mir i financijsku zaštitu od nepredviđenih događaja. Iskoristite naš besplatan kalkulator i brzo izračunajte svoju policu osiguranja.
+
 <SolarPanelCalculator client:load />

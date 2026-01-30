@@ -7,9 +7,15 @@ type NoticeProps = {
   children: React.ReactNode;
 };
 
+const NOTE_TITLES: Record<string, string> = {
+  note: "Najbitnije informacije",
+  warning: "Upozorenje",
+  tip: "Korisno",
+  info: "Informacije",
+};
+
 function Notice({ type, title, children }: NoticeProps) {
-  const displayTitle =
-    title ?? (type === "note" ? "Najbitnije informacije" : humanize(type));
+  const displayTitle = title ?? NOTE_TITLES[type] ?? humanize(type);
   return (
     <div className={`notice ${type}`}>
       <div className="notice-head">
