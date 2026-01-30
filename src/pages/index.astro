@@ -3,20 +3,15 @@ import ImageMod from "@/components/ImageMod.astro";
 import Base from "@/layouts/Base.astro";
 import { getListPage } from "@/lib/contentParser.astro";
 import { markdownify } from "@/lib/utils/textConverter";
-import CallToAction from "@/partials/CallToAction.astro";
-import Testimonial from "@/partials/Testimonial.astro";
-import { FaCheck } from "react-icons/fa";
-
+import { FaArrowAltCircleRight } from "react-icons/fa";
 const homepage = await getListPage("homepage", "-index");
-const call_to_action = await getListPage("ctaSection", "call-to-action");
-const testimonial = await getListPage("testimonialSection", "testimonial");
 
 const { banner, features } = homepage.data;
 ---
 
 <Base>
   <!-- Banner -->
-  <section class="section pt-14">
+  <section class="pt-14">
     <div class="container">
       <div class="row justify-center">
         <div class="lg:col-7 md:col-9 mb-8 text-center">
@@ -33,26 +28,13 @@ const { banner, features } = homepage.data;
                 target={
                   banner.button.link.startsWith("http") ? "_blank" : "_self"
                 }
-                rel="noopener"
-              >
+                rel="noopener">
                 {banner.button.label}
               </a>
             )
           }
         </div>
-        {
-          banner.image && (
-            <div class="col-12">
-              <ImageMod
-                src={banner.image}
-                height={380}
-                width={1200}
-                alt="banner"
-                format="webp"
-              />
-            </div>
-          )
-        }
+        {banner.image && <div class="col-12" />}
       </div>
     </div>
   </section>
@@ -65,8 +47,7 @@ const { banner, features } = homepage.data;
         <div class="container">
           <div class="row items-center justify-between">
             <div
-              class={`mb:md-0 mb-6 md:col-5 ${index % 2 !== 0 && "md:order-2"}`}
-            >
+              class={`mb:md-0 mb-6 md:col-5 ${index % 2 !== 0 && "md:order-2"}`}>
               <ImageMod
                 src={feature.image}
                 height={480}
@@ -81,7 +62,9 @@ const { banner, features } = homepage.data;
               <ul>
                 {feature.bulletpoints.map((bullet: string) => (
                   <li class="relative mb-4 pl-6">
-                    <FaCheck className={"absolute left-0 top-1.5"} />
+                    <FaArrowAltCircleRight
+                      className={"absolute left-0 top-1.5"}
+                    />
                     <span set:html={markdownify(bullet)} />
                   </li>
                 ))}
@@ -98,7 +81,4 @@ const { banner, features } = homepage.data;
     ))
   }
   <!-- /Features -->
-
-  <Testimonial testimonial={testimonial} />
-  <CallToAction call_to_action={call_to_action} />
 </Base>
