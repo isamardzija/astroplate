@@ -13,7 +13,7 @@ interface ValidationErrors {
 }
 
 export default function SolarInsuranceLeadForm() {
-  const [step, setStep] = useState<1 | 2>(1);
+  const [step, setStep] = useState<1 | 2 | 3>(1);
   const [formData, setFormData] = useState<FormData>({
     squareFootage: "",
     solarValue: "",
@@ -25,6 +25,7 @@ export default function SolarInsuranceLeadForm() {
     high: number;
   } | null>(null);
   const [showEstimate, setShowEstimate] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Validation functions
   const validateSquareFootage = (value: string): string | undefined => {
@@ -50,17 +51,9 @@ export default function SolarInsuranceLeadForm() {
     return undefined;
   };
 
-  // Handle input changes with real-time validation
+  // Handle input changes without real-time validation
   const handleInputChange = (field: keyof FormData, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
-
-    // Real-time validation
-    let error: string | undefined;
-    if (field === "squareFootage") error = validateSquareFootage(value);
-    if (field === "solarValue") error = validateSolarValue(value);
-    if (field === "email") error = validateEmail(value);
-
-    setErrors((prev) => ({ ...prev, [field]: error }));
   };
 
   // Calculate estimate
@@ -111,6 +104,9 @@ export default function SolarInsuranceLeadForm() {
       return;
     }
 
+    // Show loading state
+    setIsSubmitting(true);
+
     // Submit the form to Netlify
     const form = e.currentTarget;
     fetch("/", {
@@ -119,13 +115,29 @@ export default function SolarInsuranceLeadForm() {
       body: new URLSearchParams(new FormData(form) as any).toString(),
     })
       .then(() => {
-        alert("Hvala! Primili smo vaš zahtjev i javit ćemo vam se uskoro.");
-        // Reset form or redirect as needed
+        // Show success step
+        setIsSubmitting(false);
+        setStep(3);
       })
       .catch((error) => {
+        setIsSubmitting(false);
         alert("Došlo je do greške. Molimo pokušajte ponovno.");
         console.error(error);
       });
+  };
+
+  // Reset form to start over
+  const handleRestart = () => {
+    setStep(1);
+    setFormData({
+      squareFootage: "",
+      solarValue: "",
+      email: "",
+    });
+    setErrors({});
+    setEstimate(null);
+    setShowEstimate(false);
+    setIsSubmitting(false);
   };
 
   const formatCurrency = (amount: number) => {
@@ -150,13 +162,30 @@ export default function SolarInsuranceLeadForm() {
         </span>
       </div>
 
-      {/* Heading */}
-      <h2 className="text-3xl font-bold text-gray-900 mb-2 text-center">
-        Izračunajte procjenu osiguranja za vašu nekretninu sa solarnim panelima
-      </h2>
-      <p className="text-gray-600 text-center mb-8">
-        Unesite osnovne podatke i odmah saznajte okvirnu cijenu
-      </p>
+      {/* Heading - Only on Step 1 */}
+      {step === 1 && (
+        <>
+          <h2 className="text-3xl font-bold text-gray-900 mb-2 text-center">
+            Izračunajte procjenu osiguranja za vašu nekretninu sa solarnim
+            panelima
+          </h2>
+          <p className="text-gray-600 text-center mb-6">
+            Unesite osnovne podatke i odmah saznajte okvirnu cijenu
+          </p>
+
+          {/* Separator */}
+          <div className="relative mb-8">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-gray-300"></div>
+            </div>
+            <div className="relative flex justify-center">
+              <span className="bg-white px-4 text-sm text-gray-500">
+                Podaci o nekretnini
+              </span>
+            </div>
+          </div>
+        </>
+      )}
 
       {/* Step 1: Property Details */}
       {step === 1 && (
@@ -180,7 +209,6 @@ export default function SolarInsuranceLeadForm() {
               className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all ${
                 errors.squareFootage ? "border-red-500" : "border-gray-300"
               }`}
-              autoFocus
             />
             {errors.squareFootage && (
               <p className="mt-1 text-sm text-red-600">
@@ -222,7 +250,7 @@ export default function SolarInsuranceLeadForm() {
       )}
 
       {/* Estimate Display with Animation */}
-      {showEstimate && estimate && (
+      {showEstimate && estimate && step === 2 && (
         <div className="mb-8 animate-fadeIn">
           {/* Success Checkmark */}
           <div className="flex justify-center mb-4">
@@ -247,10 +275,19 @@ export default function SolarInsuranceLeadForm() {
             <h3 className="text-xl font-semibold text-gray-900 mb-2">
               Vaša procjena osiguranja
             </h3>
-            <p className="text-3xl font-bold text-blue-600 mb-2">
-              {formatCurrency(estimate.low)} - {formatCurrency(estimate.high)}
+
+            {/* Monthly Price - Main Focus */}
+            <p className="text-3xl font-bold text-blue-600 mb-1">
+              {formatCurrency(estimate.low / 12)} -{" "}
+              {formatCurrency(estimate.high / 12)}
             </p>
-            <p className="text-sm text-gray-600">Okvirna godišnja premija</p>
+            <p className="text-sm text-gray-600 mb-3">mjesečno</p>
+
+            {/* Yearly Price - Secondary */}
+            <p className="text-base text-gray-500">
+              ({formatCurrency(estimate.low)} - {formatCurrency(estimate.high)}{" "}
+              godišnje)
+            </p>
           </div>
         </div>
       )}
@@ -395,15 +432,90 @@ export default function SolarInsuranceLeadForm() {
 
             <button
               type="submit"
-              className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl"
+              disabled={isSubmitting}
+              className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 disabled:from-gray-400 disabled:to-gray-500 disabled:cursor-not-allowed text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
             >
-              Pošalji mi detaljnu ponudu
+              {isSubmitting ? (
+                <>
+                  <svg
+                    className="animate-spin h-5 w-5 text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    ></circle>
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    ></path>
+                  </svg>
+                  Šaljem...
+                </>
+              ) : (
+                "Pošalji mi detaljnu ponudu"
+              )}
             </button>
 
             <p className="mt-3 text-center text-sm text-gray-600">
               Besplatno, bez obveze
             </p>
           </form>
+        </div>
+      )}
+
+      {/* Step 3: Success Message */}
+      {step === 3 && (
+        <div className="animate-fadeIn text-center">
+          {/* Success Icon */}
+          <div className="flex justify-center mb-6">
+            <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center animate-scaleIn">
+              <svg
+                className="w-10 h-10 text-green-600"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M5 13l4 4L19 7"
+                />
+              </svg>
+            </div>
+          </div>
+
+          <h3 className="text-2xl font-bold text-gray-900 mb-3">
+            Hvala na upitu!
+          </h3>
+
+          <p className="text-gray-700 mb-2">
+            Primili smo vaš zahtjev i javit ćemo vam se uskoro na email adresu:
+          </p>
+
+          <p className="text-blue-600 font-medium mb-6">{formData.email}</p>
+
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+            <p className="text-sm text-gray-700">
+              Naš tim će vam pripremiti detaljnu kalkulaciju police i
+              kontaktirati vas u roku od 24 sata.
+            </p>
+          </div>
+
+          <button
+            onClick={handleRestart}
+            className="w-full bg-white border-2 border-blue-600 text-blue-600 hover:bg-blue-50 font-semibold py-3 px-6 rounded-lg transition-all duration-200"
+          >
+            Izračunaj procjenu za drugu nekretninu
+          </button>
         </div>
       )}
 
@@ -431,12 +543,25 @@ export default function SolarInsuranceLeadForm() {
           }
         }
 
+        @keyframes spin {
+          from {
+            transform: rotate(0deg);
+          }
+          to {
+            transform: rotate(360deg);
+          }
+        }
+
         .animate-fadeIn {
           animation: fadeIn 0.5s ease-out forwards;
         }
 
         .animate-scaleIn {
           animation: scaleIn 0.4s ease-out forwards;
+        }
+
+        .animate-spin {
+          animation: spin 1s linear infinite;
         }
       `}</style>
     </div>
