@@ -407,7 +407,6 @@ export default function SolarInsuranceLeadForm() {
                 className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all ${
                   errors.email ? "border-red-500" : "border-gray-300"
                 }`}
-                autoFocus
               />
               {errors.email && (
                 <p className="mt-1 text-sm text-red-600">{errors.email}</p>
