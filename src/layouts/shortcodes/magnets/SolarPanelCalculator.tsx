@@ -150,7 +150,7 @@ export default function SolarInsuranceLeadForm() {
   };
 
   return (
-    <div className="w-full max-w-2xl mx-auto my-12 p-8 bg-white rounded-2xl shadow-xl">
+    <div className="w-full max-w-2xl mx-auto my-12 p-8 bg-white border-2 border-blue-300 rounded-2xl shadow-xl">
       {/* Progress Indicator */}
       <div className="mb-6 flex items-center justify-center gap-2 text-sm text-gray-600">
         <span className={step === 1 ? "font-semibold text-blue-600" : ""}>
